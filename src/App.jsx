@@ -4,6 +4,7 @@ import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { Stats } from './components/Stats'; 
 import {Founder} from './components/Founder';
+import { Services } from './components/Services';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <About />
       <Stats />
       <Founder/>
+      <Services/>
     </div>
   );
 }
