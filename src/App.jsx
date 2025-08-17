@@ -6,6 +6,7 @@ import { Stats } from './components/Stats';
 import {Founder} from './components/Founder';
 import { Services } from './components/Services';
 import { Approach } from './components/Approach';
+import { Features } from './components/Features';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Founder/>
       <Services/>
       <Approach/>
+      <Features/>
     </div>
   );
 }
