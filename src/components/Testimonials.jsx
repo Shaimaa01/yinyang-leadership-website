@@ -12,7 +12,7 @@ const testimonialsData = [
 
 export const Testimonials = () => {
   return (
-    <section className="mt-[71px] mx-[106px] ">
+    <section className="my-[71px] mx-[106px] ">
       <h2 className="mt-[48px] max-w-[813px] font-Sora text-[44px] leading-[52.8px] tracking-[-1.32px] text-Blue27">
         We empower our clients to scale today while building for the future.
       </h2>

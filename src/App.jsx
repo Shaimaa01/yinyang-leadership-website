@@ -9,6 +9,7 @@ import { Approach } from './components/Approach';
 import { Features } from './components/Features';
 import { Outcomes } from './components/Outcomes';
 import { Testimonials } from './components/Testimonials';
+import { Footer } from './components/Footer';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Features/>
       <Outcomes/>
       <Testimonials/>
+      <Footer/>
     </div>
   );
 }
