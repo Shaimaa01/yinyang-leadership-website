@@ -6,8 +6,9 @@ import client2 from "../assets/client-2.jpg";
 import videoThumbnail from "../assets/client-3.jpg";
 import clientLogo from "../assets/client-logo.png";
 import playIcon from "../assets/play-icon.png";
+import { Draggable } from "gsap/Draggable";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, Draggable);
 
 const testimonialsData = [
   {
@@ -70,11 +71,72 @@ const testimonialsData = [
       discoverLink: "#",
     },
   },
+  {
+    name: "Las Sabir",
+    company: "Founder, Booklt",
+    image: client1,
+    activeContent: {
+      paragraphs: [
+        "This is the active content for Las Sabir. It shows when his card is in the center.",
+        "Each card can have unique detailed content like this.",
+      ],
+      logo: clientLogo,
+      clientName: "Las Sabir",
+      clientTitle: "CEO, Booklt",
+      discoverLink: "#",
+    },
+  },
+  {
+    name: "Sébastien Béal",
+    company: "Founder",
+    image: null,
+    activeContent: {
+      paragraphs: [
+        "They understood our business, responded quickly, and their customized SaaS designs have been invaluable.",
+        "Working with them has been great, and I commend their dedication and expertise.",
+      ],
+      logo: clientLogo,
+      clientName: "Tao Lei",
+      clientTitle: "CEO, Marco Payroll",
+      discoverLink: "#",
+    },
+  },
+  {
+    name: "Sébastien Béal",
+    company: "Founder",
+    image: client2,
+    activeContent: {
+      paragraphs: [
+        "They understood our business, responded quickly, and their customized SaaS designs have been invaluable.",
+        "Working with them has been great, and I commend their dedication and expertise.",
+      ],
+      logo: clientLogo,
+      clientName: "Tao Lei",
+      clientTitle: "CEO, Marco Payroll",
+      discoverLink: "#",
+    },
+  },
+  {
+    name: "Tao Lei",
+    company: "CEO, Marco Payroll",
+    image: videoThumbnail,
+    activeContent: {
+      paragraphs: [
+        "They understood our business, responded quickly, and their customized SaaS designs have been invaluable.",
+        "Working with them has been great, and I commend their dedication and expertise.",
+      ],
+      logo: clientLogo,
+      clientName: "Tao Lei",
+      clientTitle: "CEO, Marco Payroll",
+      discoverLink: "#",
+    },
+  },
 ];
 
-const TestimonialCard = ({ data, isActive }) => {
+const TestimonialCard = ({ data, isActive, onClick }) => {
   return (
     <div
+      onClick={onClick}
       className={` flex-shrink-0 transition-all duration-500 ease-in-out ${
         isActive ? "max-w-[559px]" : "max-w-[349px]"
       }`}
@@ -155,47 +217,103 @@ const TestimonialCard = ({ data, isActive }) => {
   );
 };
 
-
 export const Testimonials = () => {
-  const [activeIndex, setActiveIndex] = useState(3); 
+  const [activeIndex, setActiveIndex] = useState(3);
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const tapeRef = useRef(null);
+  const masterTimeline = useRef(null);
+
+  const handleCardClick = (index) => {
+    if (masterTimeline.current) {
+      masterTimeline.current.kill();
+
+      if (tapeRef.current.scrollWidth > sectionRef.current.offsetWidth) {
+        const maxDrag = -(
+          tapeRef.current.scrollWidth - sectionRef.current.offsetWidth
+        );
+
+        Draggable.create(tapeRef.current, {
+          type: "x",
+          bounds: { minX: maxDrag, maxX: 0 },
+          inertia: true,
+        });
+      }
+    }
+    setActiveIndex(activeIndex === index ? null : index);
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray(tapeRef.current.children);
+      const walkInDuration = testimonialsData.length * 2;
+      const timePerCard = walkInDuration / testimonialsData.length;
 
-     
-      gsap.from(titleRef.current, {
-        x: -150, 
-        autoAlpha: 0,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 70%" },
-      });
+      gsap.set(tapeRef.current, { x: "100%" });
 
-    
-      gsap.to(tapeRef.current, {
-        x: () =>
-          -(tapeRef.current.scrollWidth - sectionRef.current.offsetWidth) + 48,
-        ease: "none",
+      masterTimeline.current = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "center center",
-          end: () => `+=${tapeRef.current.scrollWidth}`,
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-         
-          onUpdate: (self) => {
-            const progress = self.progress;
-            const newIndex = Math.floor(progress * cards.length);
-            setActiveIndex(newIndex);
-          },
+          start: "top 70%",
+          toggleActions: "restart none restart none",
         },
       });
+
+      masterTimeline.current.from(titleRef.current, {
+        x: -100,
+        autoAlpha: 0,
+        duration: 1,
+        delay: 0.3,
+        ease: "slow(0.7,0.7,false)",
+      });
+
+      masterTimeline.current.to(
+        tapeRef.current,
+        {
+          x: () =>
+            `-${
+              tapeRef.current.scrollWidth - sectionRef.current.offsetWidth
+            }px`,
+          duration: walkInDuration,
+
+          ease: "slow(0.7, 0.7, false)",
+        },
+        "-=0.7"
+      );
+
+      testimonialsData.forEach((card, index) => {
+        if (card.activeContent) {
+          const activationTime = 2 + index * timePerCard;
+          masterTimeline.current.call(
+            () => setActiveIndex(index),
+            [],
+            activationTime
+          );
+        }
+      });
+
+      masterTimeline.current.call(
+        () => {
+          if (tapeRef.current.scrollWidth > sectionRef.current.offsetWidth) {
+            const maxDrag = -(
+              tapeRef.current.scrollWidth - sectionRef.current.offsetWidth
+            );
+
+            Draggable.create(tapeRef.current, {
+              type: "x",
+              bounds: { minX: maxDrag, maxX: 0 },
+              inertia: true,
+              onPress: () => {
+                if (masterTimeline.current) masterTimeline.current.kill();
+                setActiveIndex(null);
+              },
+            });
+          }
+        },
+        [],
+        ">"
+      );
     }, sectionRef);
+
     return () => ctx.revert();
   }, []);
 
@@ -208,21 +326,26 @@ export const Testimonials = () => {
         We empower our clients to scale today while building for the future.
       </h2>
 
-      <div ref={tapeRef} className="mt-[40px] flex justify-center  gap-[48px] ">
+      <div
+        ref={tapeRef}
+        className="mt-[40px] flex justify-center  gap-[48px] min-h-[560px]"
+      >
         {testimonialsData.map((client, index) => (
           <TestimonialCard
             key={index}
             data={client}
-            isActive={index === activeIndex && client.activeContent !== null}
+            isActive={index === activeIndex}
+            onClick={() => handleCardClick(index)}
           />
         ))}
+        <div className="w-1 flex-shrink-0"></div>
       </div>
 
-      <div class="absolute mx-[106px] left-[16px] bottom-[16px] flex flex-col  gap-4">
-        <div class="w-[101px] h-[54px] rounded-[20px] py-[8px] px-[12px] bg-cyan67 font-Sora text-[39.84px] leading-[40px] tracking-[-1.2px] text-Blue26 flex justify-center items-center">
-          <span class="  mt-2">90+</span>
+      <div className="absolute mx-[106px] left-[16px] bottom-[16px] flex flex-col  gap-4">
+        <div className="w-[101px] h-[54px] rounded-[20px] py-[8px] px-[12px] bg-cyan67 font-Sora text-[39.84px] leading-[40px] tracking-[-1.2px] text-Blue26 flex justify-center items-center">
+          <span className="  mt-2">90+</span>
         </div>
-        <p class="text-Blue52 font-Sora text-[20px] leading-[24px] ">
+        <p className="text-Blue52 font-Sora text-[20px] leading-[24px] ">
           Happy clients
         </p>
       </div>
