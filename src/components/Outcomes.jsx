@@ -24,7 +24,7 @@ const outcomesData = [
   },
 ];
 
-// Data for the pill-shaped badges
+
 const pillsData = [
   "100% System integration",
   "5+ Culture rituals activated",
@@ -54,7 +54,7 @@ export const Outcomes = () => {
         </div>
 
        
-        <div className=" px-[160px] flex flex-wrap justify-between  font-OpenSans">
+        <div className=" px-[160px] flex flex-wrap gap-[64px] items-center justify-center  font-OpenSans">
           {pillsData.map((pill, index) => (
             <div
               key={index}

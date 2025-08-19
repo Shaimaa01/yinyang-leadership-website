@@ -1,4 +1,6 @@
-
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Draggable } from 'gsap/Draggable';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -12,8 +14,9 @@ import { Testimonials } from './components/Testimonials';
 import { Footer } from './components/Footer';
 
 function App() {
+  gsap.registerPlugin(ScrollTrigger, Draggable);
+
   return (
-   
     <div className="relative bg-white">
       <Header />
       <Hero />

@@ -7,8 +7,9 @@ import videoThumbnail from "../assets/client-3.jpg";
 import clientLogo from "../assets/client-logo.png";
 import playIcon from "../assets/play-icon.png";
 import { Draggable } from "gsap/Draggable";
+import { CustomEase } from "gsap/CustomEase";
 
-gsap.registerPlugin(ScrollTrigger, Draggable);
+gsap.registerPlugin(CustomEase) 
 
 const testimonialsData = [
   {
@@ -218,27 +219,38 @@ const TestimonialCard = ({ data, isActive, onClick }) => {
 };
 
 export const Testimonials = () => {
-  const [activeIndex, setActiveIndex] = useState(3);
+  const [activeIndex, setActiveIndex] = useState(null);
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const tapeRef = useRef(null);
   const masterTimeline = useRef(null);
 
+  const setupDraggable = () => {
+    if (tapeRef.current.scrollWidth > sectionRef.current.offsetWidth) {
+      const firstCard = tapeRef.current.children[0];
+      const lastCard =
+        tapeRef.current.children[tapeRef.current.children.length - 2];
+
+      const firstCardLeft = firstCard.offsetLeft;
+      const lastCardRight = lastCard.offsetLeft + lastCard.offsetWidth;
+      const sectionWidth = sectionRef.current.offsetWidth;
+      const sectionMargin = 106;
+
+      const maxX = sectionMargin - firstCardLeft;
+      const minX = -(lastCardRight - sectionWidth + sectionMargin);
+
+      Draggable.create(tapeRef.current, {
+        type: "x",
+        bounds: { minX, maxX },
+        inertia: true,
+      });
+    }
+  };
+
   const handleCardClick = (index) => {
     if (masterTimeline.current) {
       masterTimeline.current.kill();
-
-      if (tapeRef.current.scrollWidth > sectionRef.current.offsetWidth) {
-        const maxDrag = -(
-          tapeRef.current.scrollWidth - sectionRef.current.offsetWidth
-        );
-
-        Draggable.create(tapeRef.current, {
-          type: "x",
-          bounds: { minX: maxDrag, maxX: 0 },
-          inertia: true,
-        });
-      }
+      setupDraggable();
     }
     setActiveIndex(activeIndex === index ? null : index);
   };
@@ -271,11 +283,11 @@ export const Testimonials = () => {
         {
           x: () =>
             `-${
-              tapeRef.current.scrollWidth - sectionRef.current.offsetWidth
+              (tapeRef.current.scrollWidth - sectionRef.current.offsetWidth + 106) 
             }px`,
           duration: walkInDuration,
 
-          ease: "slow(0.7, 0.7, false)",
+        ease: CustomEase.create("custom", "M0,0 C0,0 0.952,0.998 1,1 1.019,1 1,1 1,1 "),
         },
         "-=0.7"
       );
@@ -293,21 +305,8 @@ export const Testimonials = () => {
 
       masterTimeline.current.call(
         () => {
-          if (tapeRef.current.scrollWidth > sectionRef.current.offsetWidth) {
-            const maxDrag = -(
-              tapeRef.current.scrollWidth - sectionRef.current.offsetWidth
-            );
-
-            Draggable.create(tapeRef.current, {
-              type: "x",
-              bounds: { minX: maxDrag, maxX: 0 },
-              inertia: true,
-              onPress: () => {
-                if (masterTimeline.current) masterTimeline.current.kill();
-                setActiveIndex(null);
-              },
-            });
-          }
+          gsap.set(tapeRef.current, { x: 0 });
+          setupDraggable();
         },
         [],
         ">"
