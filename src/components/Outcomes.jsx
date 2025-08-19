@@ -1,3 +1,6 @@
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+
 const outcomesData = [
   {
     title: "1. Adoption & Integration of the Codified Culture Model",
@@ -24,7 +27,6 @@ const outcomesData = [
   },
 ];
 
-
 const pillsData = [
   "100% System integration",
   "5+ Culture rituals activated",
@@ -33,14 +35,69 @@ const pillsData = [
 ];
 
 export const Outcomes = () => {
+  const sectionRef = useRef(null);
+  const titleRef = useRef(null);
+  const columnsRef = useRef(null);
+  const pillsRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const masterTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+      });
+
+      masterTimeline.from(titleRef.current, {
+        y: 50,
+        autoAlpha: 0,
+        duration: 1,
+        ease: "power3.out",
+      });
+
+      masterTimeline.from(
+        gsap.utils.toArray(columnsRef.current.children),
+        {
+          y: 50,
+          autoAlpha: 0,
+          stagger: 0.2,
+          duration: 1,
+          ease: "power3.out",
+        },
+        "-=0.8"
+      );
+
+      masterTimeline.from(
+        gsap.utils.toArray(pillsRef.current.children),
+        {
+          y: 50,
+          autoAlpha: 0,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        "-=0.8"
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="mt-[158.78px] font-Poppins">
-      <h2 className="text-[44.99px] leading-[56.4px] tracking-[1.07px] text-center text-Teal">
+    <section ref={sectionRef} className="mt-[158.78px] font-Poppins">
+      <h2
+        ref={titleRef}
+        className=" text-[44.99px] leading-[56.4px] tracking-[1.07px] text-center text-Teal"
+      >
         Success Metrics & Tangible Outcomes
       </h2>
 
       <div className="py-[39px] font-Inter flex flex-col gap-[64px]">
-        <div className="mt-[51px] mx-[96px] flex justify-between items-center text-[18.5px] leading-[33.6px] tracking-[0.32px] ">
+        <div
+          ref={columnsRef}
+          className=" mt-[51px] mx-[96px] flex justify-between items-center text-[18.5px] leading-[33.6px] tracking-[0.32px] "
+        >
           {outcomesData.map((item, index) => (
             <div key={index} className="max-w-[552px] px-[24px]">
               <h3 className="  text-Red44 mb-2">{item.title}</h3>
@@ -53,8 +110,10 @@ export const Outcomes = () => {
           ))}
         </div>
 
-       
-        <div className=" px-[160px] flex flex-wrap gap-[64px] items-center justify-center  font-OpenSans">
+        <div
+          ref={pillsRef}
+          className=" px-[160px] flex flex-wrap gap-[64px] items-center justify-center  font-OpenSans"
+        >
           {pillsData.map((pill, index) => (
             <div
               key={index}

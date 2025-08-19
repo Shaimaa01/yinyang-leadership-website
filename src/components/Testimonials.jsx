@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import client1 from "../assets/client-1.jpg";
 import client2 from "../assets/client-2.jpg";
 import videoThumbnail from "../assets/client-3.jpg";
@@ -9,7 +8,7 @@ import playIcon from "../assets/play-icon.png";
 import { Draggable } from "gsap/Draggable";
 import { CustomEase } from "gsap/CustomEase";
 
-gsap.registerPlugin(CustomEase) 
+
 
 const testimonialsData = [
   {
