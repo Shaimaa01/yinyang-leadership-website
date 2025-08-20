@@ -48,16 +48,16 @@ const servicesData = [
 
 export const Services = () => {
   return (
-    <section className="mt-[223.5px]  font-Poppins     ">
+    <section className="mt-[223.5px]  font-Poppins    ">
       <h2 className="mb-[214.69px] mx-[116px] text-right font-bold text-[78.99px] leading-[96px] tracking-[-1px]  uppercase  text-Teal ">
         My Services
       </h2>
 
-      <div className="flex flex-col items-center gap-[392px] mx-[86px]">
+      <div className="flex flex-col items-center gap-[392px] mx-[86px]  max-2xl:gap-[100px] ">
         {servicesData.map((service) => (
           <div
             key={service.number}
-            className={`py-[192px] px-[96px] flex items-center justify-between gap-[160px] w-full  font-OpenSans  text-white  ${service.bgColor} ${service.textColor} ${service.rotation} `}
+            className={`py-[192px] max-2xl:py-[50px] px-[96px] max-2xl:px-[40px] flex items-center justify-between gap-[160px] max-2xl:gap-[100px] w-full  font-OpenSans  text-white  ${service.bgColor} ${service.textColor} ${service.rotation} `}
           >
             <div className="font-bold text-[98.55px] leading-[115.2px] ">
               {service.number}

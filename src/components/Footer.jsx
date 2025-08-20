@@ -35,7 +35,7 @@ export const Footer = () => {
         }}
       ></div>
 
-      <div className="h-[359px] py-[80px] px-[96px] flex items-center justify-between">
+      <div className="h-[359px] max-2xl:h-full py-[80px] px-[96px] flex flex-wrap items-center justify-between">
         <div className="flex items-start gap-[80px]">
 
           <div className="flex flex-col gap-[15px]">

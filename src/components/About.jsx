@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import aboutImage from "../assets/about.png";
-import about2Image from "../assets/about2.png";
-import about3Image from "../assets/about3.png";
-import about4Image from "../assets/about4.png";
-import about5Image from "../assets/about5.png";
-import about6Image from "../assets/about6.png";
-import about7Image from "../assets/about7.png";
+import aboutImage from "../assets/about/about.png";
+import about2Image from "../assets/about/about2.png";
+import about3Image from "../assets/about/about3.png";
+import about4Image from "../assets/about/about4.png";
+import about5Image from "../assets/about/about5.png";
+import about6Image from "../assets/about/about6.png";
+import about7Image from "../assets/about/about7.png";
 
 const imagesData = [
   {
@@ -141,9 +141,9 @@ export const About = () => {
   return (
     <section
       ref={sectionRef}
-      className="mt-[75.8px] mx-[208px] flex justify-center items-center gap-[11px]"
+      className="mt-[75.8px] mx-[20px] flex justify-center items-center gap-[11px] max-2xl:flex-col"
     >
-      <div className="max-w-[704px] font-Poppins ">
+      <div className="max-w-[704px] max-2xl:max-w-full font-Poppins ">
         <h2
           ref={titleRef}
           className="mb-[55.89px] text-[64px]  leading-[67.2px] tracking-[-1.28px] text-Teal"
@@ -186,24 +186,22 @@ export const About = () => {
 
       <div
         ref={imageContainerRef}
-        className="w-[752px] flex justify-center items-center "
+        className="w-[752px] h-[750px] flex justify-center items-center relative  "
       >
-        <div className="relative   ">
-          {currentImages.map((image, index) => (
-            <img
-              key={index}
-              src={image.src}
-              alt={image.alt}
-              style={{
-                zIndex: image.z,
-                transform: ` translate(-${image.x}%, -${image.y}%)  rotate(${image.rotate}deg)`,
-                maxWidth: `${image.w}px`,
-              }}
-              onClick={() => handleImageClick(index)}
-              className="absolute top-1/2 left-1/2  h-auto rounded-[4px] shadow-[2px_4px_8px_0px_#00101980] cursor-pointer transition-transform ease-in-out hover:scale-110 hover:rotate-10 "
-            />
-          ))}
-        </div>
+        {currentImages.map((image, index) => (
+          <img
+            key={index}
+            src={image.src}
+            alt={image.alt}
+            style={{
+              zIndex: image.z,
+              transform: ` translate(-${image.x}%, -${image.y}%)  rotate(${image.rotate}deg)`,
+              maxWidth: `${image.w}px`,
+            }}
+            onClick={() => handleImageClick(index)}
+            className="absolute top-1/2 left-1/2  h-auto rounded-[4px] shadow-[2px_4px_8px_0px_#00101980] cursor-pointer transition-transform ease-in-out hover:scale-110 hover:rotate-10 "
+          />
+        ))}
       </div>
     </section>
   );

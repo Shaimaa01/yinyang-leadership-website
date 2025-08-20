@@ -326,7 +326,7 @@ export const Testimonials = () => {
 
       <div
         ref={tapeRef}
-        className="mt-[40px] flex justify-center  gap-[48px] min-h-[560px]"
+        className="mt-[40px] flex justify-center  gap-[48px] h-[560px]"
       >
         {testimonialsData.map((client, index) => (
           <TestimonialCard

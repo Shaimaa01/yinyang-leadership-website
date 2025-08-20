@@ -7,12 +7,12 @@ const statsData = [
 
 export const Stats = () => {
   return (
-    <section className=" mt-[75.8px] h-[405px] font-Poppins">
+    <section className=" mt-[75.8px] h-[405px] max-2xl:h-full font-Poppins">
       <h2 className="text-center text-[44px] leading-[52px] font-medium  text-Teal">
         lorem ipsum
       </h2>
 
-      <div className="mt-[115px] flex justify-center items-center gap-[24px] ">
+      <div className="mt-[115px] flex flex-wrap justify-center items-center gap-[24px] ">
         {statsData.map((stat, index) => {
           const angle = stat.percentage * 3.6;
           return (

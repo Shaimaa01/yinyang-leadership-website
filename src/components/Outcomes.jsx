@@ -96,10 +96,10 @@ export const Outcomes = () => {
       <div className="py-[39px] font-Inter flex flex-col gap-[64px]">
         <div
           ref={columnsRef}
-          className=" mt-[51px] mx-[96px] flex justify-between items-center text-[18.5px] leading-[33.6px] tracking-[0.32px] "
+          className=" mt-[51px] mx-[96px] max-2xl:mx-[40px] flex max-2xl:flex-col justify-center gap-[40px] items-start text-[18.5px] leading-[33.6px] tracking-[0.32px] "
         >
           {outcomesData.map((item, index) => (
-            <div key={index} className="max-w-[552px] px-[24px]">
+            <div key={index} className="w-[552px] max-2xl:w-full px-[24px]">
               <h3 className="  text-Red44 mb-2">{item.title}</h3>
               <ul className="text-black">
                 {item.points.map((point, pIndex) => (
@@ -112,7 +112,7 @@ export const Outcomes = () => {
 
         <div
           ref={pillsRef}
-          className=" px-[160px] flex flex-wrap gap-[64px] items-center justify-center  font-OpenSans"
+          className=" px-[160px] max-2xl:px-[40px]  flex flex-wrap gap-[64px] justify-center  max-2xl:justify-start font-OpenSans"
         >
           {pillsData.map((pill, index) => (
             <div

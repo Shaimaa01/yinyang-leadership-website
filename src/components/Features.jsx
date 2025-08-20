@@ -43,7 +43,7 @@ export const Features = () => {
         </p>
       </div>
 
-      <div className="flex justify-center items-start gap-[22px]">
+      <div className="flex justify-center items-start gap-[22px] flex-wrap">
         <div className="flex flex-col gap-[10.44px] max-w-[656px] font-Inter">
           {accordionData.map((item, index) => (
             <div

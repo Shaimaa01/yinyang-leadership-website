@@ -2,8 +2,8 @@ import scrollIcon from "../assets/scroll-icon.svg fill.svg"
 export const Hero = () => {
   return (
     <section className="mt-[75.8px] ">
-      <div className="px-[96px] font-Poppins text-center">
-        <h1 className=" font-bold text-[115.5px] leading-[134.4px] tracking-[2px]  uppercase text-Blue21">
+      <div className="px-[96px] max-2xl:px-[40px] font-Poppins text-center">
+        <h1 className=" font-bold text-[115.5px] max-2xl:text-[60px] leading-[134.4px] max-2xl:leading-[60px] tracking-[2px]  uppercase text-Blue21">
           Co creating <span className="text-Teal">INTENTIONALLY</span> FOR
           <span className="text-Red44"> LONG TERM</span> CHANGE.
         </h1>

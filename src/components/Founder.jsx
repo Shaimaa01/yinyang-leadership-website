@@ -1,27 +1,16 @@
 import founderPortrait from "../assets/founder-portrait.jpg";
-import founderBg from "../assets/founder-bg.jpg";
 
 export const Founder = () => {
   return (
-    <section className="mt-[50px] mx-[72px] min-h-[1320px] relative bg-Red87 px-[162.5px]  py-24 sm:py-32 overflow-hidden">
-      <img
-        src={founderBg}
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover opacity-63  blur-[2.8px] z-0"
-      />
+    <section className="mt-[50px] mx-[72px] min-h-[1320px] relative bg-Red87 bg-[url(/src/assets/founder-bg.jpg)] bg-center bg-cover  bg-fixed   overflow-hidden flex items-center justify-center">
+      <div className="bg-Red87/63  p-[20px] min-h-[1320px]  h-full flex justify-center items-center gap-[210px] max-2xl:gap-[50px] max-2xl:flex-col">
+        <img
+          src={founderPortrait}
+          alt="Tanisha M Jain"
+          className="w-[522px] h-auto "
+        />
 
-      <div className=" relative z-10 h-full flex justify-between items-center">
-       
-        <div className="flex justify-center lg:justify-end">
-          <img
-            src={founderPortrait}
-            alt="Tanisha M Jain"
-            className="w-[522px] h-auto"
-          />
-        </div>
-
-    
-        <div className=" max-w-[741.6px] font-Poppins text-black">
+        <div className=" max-w-[741.6px] max-2xl:max-w-full font-Poppins text-black">
           <h2 className=" text-[59.53px] leading-[62px] tracking-[8px] text-black">
             Meet Tanisha M Jain
           </h2>

@@ -7,7 +7,7 @@ export const Approach = () => {
         Our Approach
       </h2>
 
-      <p className="mt-[78px] mx-[96px] mb-[96px] flex flex-col gap-[78.79px] opacity-10 font-bold text-[50.77px] leading-[96px] tracking-[-1px] uppercase text-black">
+      <p className="mt-[78px] mx-[96px] max-2xl:mx-[40px] mb-[96px] flex flex-col gap-[78.79px] opacity-10 font-bold text-[50.77px] leading-[96px] tracking-[-1px] uppercase text-black">
         At Lorem Ipsum Leadership, we partner with you to design culturae
          intentionally. At the heart of our work is the Cultura Compass — our
         signature framework that helps organisations explorare where they are,
