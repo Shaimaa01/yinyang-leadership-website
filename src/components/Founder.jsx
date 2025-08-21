@@ -3,7 +3,7 @@ import founderPortrait from "../assets/founder-portrait.jpg";
 export const Founder = () => {
   return (
     <section className="mt-[50px] mx-[72px] min-h-[1320px] relative bg-Red87 bg-[url(/src/assets/founder-bg.jpg)] bg-center bg-cover  bg-fixed   overflow-hidden flex items-center justify-center">
-      <div className="bg-Red87/63  p-[20px] min-h-[1320px]  h-full flex justify-center items-center gap-[210px] max-2xl:gap-[50px] max-2xl:flex-col">
+      <div className="bg-Red87/63  p-[20px] min-h-[1320px] w-full h-full flex justify-center items-center gap-[210px] max-2xl:gap-[50px] max-2xl:flex-col">
         <img
           src={founderPortrait}
           alt="Tanisha M Jain"
@@ -75,3 +75,4 @@ export const Founder = () => {
     </section>
   );
 };
+

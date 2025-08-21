@@ -1,5 +1,7 @@
-import { useState } from "react";
 import featuresImage from "../assets/features-image.png";
+import { SplitText } from "gsap/SplitText";
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
 
 const accordionData = [
   {
@@ -26,25 +28,127 @@ const accordionData = [
 
 export const Features = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const sectionRef = useRef(null);
+  const titleRef = useRef(null);
+  const paragraphRef = useRef(null);
+  const imageRef = useRef(null);
+  const accordionRef = useRef(null);
 
   const handleToggle = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      document.fonts.ready
+        .then(() => {
+          let split = new SplitText(titleRef.current, { type: "words" });
+
+          gsap.set(split.words, {
+            display: "inline-block",
+            scaleY: 0,
+            opacity: 0,
+            transformOrigin: "bottom center",
+          });
+
+          gsap.set(paragraphRef.current, {
+            opacity: 0,
+          });
+
+          gsap.set(imageRef.current, {
+            y: 50,
+            opacity: 0,
+          });
+
+          gsap.set(gsap.utils.toArray(accordionRef.current?.children), {
+            x: -60,
+            opacity: 0,
+          });
+
+          const masterTimeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 70%",
+              markers: false,
+            },
+          });
+
+          masterTimeline.to(split.words, {
+            scaleY: 1,
+            opacity: 1,
+            duration: 0.6,
+            stagger: 0.08,
+            ease: "power2.out",
+          });
+
+          masterTimeline.to(
+            paragraphRef.current,
+            {
+              opacity: 1,
+              duration: 0.8,
+              ease: "power2.out",
+            },
+            "-=0.3"
+          );
+
+          masterTimeline.to(
+            imageRef.current,
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              ease: "power2.out",
+            },
+            "-=0.4"
+          );
+
+          masterTimeline.to(
+            gsap.utils.toArray(accordionRef.current?.children),
+            {
+              x: 0,
+              opacity: 1,
+              stagger: 0.7,
+              duration: 1.5,
+              ease: "power2.out",
+            },
+            "-=0.3"
+          );
+
+          return () => {
+            split.revert();
+          };
+        })
+        .catch((error) => {
+          console.error("Font loading error:", error);
+        });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="">
+    <section ref={sectionRef} className="">
       <div className="text-center py-[88px] flex flex-col items-center gap-[21.3px] font-Poppins">
-        <h2 className="text-[44.99px] leading-[56.4px] tracking-[1.07px] text-Teal">
+        <h2
+          ref={titleRef}
+          className="text-[44.99px] leading-[56.4px] tracking-[1.07px] text-Teal"
+        >
           Lorem-lorem sapiens sanitas
         </h2>
-        <p className="mx-[66px] font-medium text-[19.77px] leading-[28.6px] tracking-[0.22px] text-Rose11 max-w-[623px]">
+        <p
+          ref={paragraphRef}
+          className="mx-[66px] font-medium text-[19.77px] leading-[28.6px] tracking-[0.22px] text-Rose11 max-w-[623px]"
+        >
           Five strata of leniter integrata sapiens sanitas that curat de te omni
           tempore, non solum cum iam scis te aegrotum esse.
         </p>
       </div>
 
       <div className="flex justify-center items-start gap-[22px] flex-wrap">
-        <div className="flex flex-col gap-[10.44px] max-w-[656px] font-Inter">
+        <div
+          ref={accordionRef}
+          className="flex flex-col gap-[10.44px] max-w-[656px] font-Inter"
+        >
           {accordionData.map((item, index) => (
             <div
               key={index}
@@ -73,6 +177,7 @@ export const Features = () => {
         </div>
 
         <img
+          ref={imageRef}
           src={featuresImage}
           alt="App interface showing health metrics"
           className=" w-[656px] h-auto border-2 object-contain border-Rose11 rounded-[32px] shadow-[0px_16px_0px_0px_#3A001D]"

@@ -13,9 +13,10 @@ import { Features } from "./components/Features";
 import { Outcomes } from "./components/Outcomes";
 import { Testimonials } from "./components/Testimonials";
 import { Footer } from "./components/Footer";
+import { SplitText } from "gsap/SplitText";
 
 function App() {
-  gsap.registerPlugin(ScrollTrigger, Draggable, CustomEase);
+  gsap.registerPlugin(ScrollTrigger, Draggable, CustomEase , SplitText);
 
   return (
     <div className="relative bg-white">
